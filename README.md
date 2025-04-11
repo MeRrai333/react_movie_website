@@ -53,7 +53,7 @@ For example
     
 ![Home2](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Home_2.png?raw=true)
     
-![Home3](https://github.com/MeRrai333/react_movie_website /blob/main/ui/Home_3.png?raw=true)
+![Home3](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Home_3.png?raw=true)
     
 ![Movie_Detail](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Movie_Detail.png?raw=true)
     
