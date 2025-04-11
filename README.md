@@ -29,6 +29,7 @@ VITE_WEBNAME="React Movie"
 ```
 - VITE_APIKEY: API key from www.themoviedb.org
 - VITE_DEFALUTPRICE: Default price for none adjust film price
+- VITE_WEBNAME: Prefix title of page
 
 ## How to run
 In root of project run this in terminal for testing in dev mode
