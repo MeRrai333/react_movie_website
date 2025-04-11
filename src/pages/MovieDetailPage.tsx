@@ -30,7 +30,11 @@ export default function MovieDetailPage(){
                 document.title = `${import.meta.env.VITE_WEBNAME} | ${json.title}`
                 setData(json)
             })
-            .catch(console.error)
+            .catch(err => {
+                console.error(err)
+                alert("Some error")
+                navigate('/')
+            })
     }, [])
 
     const handlePopup = (val: number) => {
