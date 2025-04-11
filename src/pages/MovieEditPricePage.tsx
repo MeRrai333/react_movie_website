@@ -24,7 +24,11 @@ export default function MovieEditPricePage(){
                 document.title = `${import.meta.env.VITE_WEBNAME} | ${json.title}`
                 setData(json)
             })
-            .catch(console.error)
+            .catch(err => {
+                console.error(err)
+                alert("Some error")
+                navigate('/')
+            })
     }, [])
 
     return <main
