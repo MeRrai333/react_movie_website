@@ -65,4 +65,4 @@ For example
     
 ![Cart3](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Cart_3.png?raw=true)
     
-![Ordering](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Ordering.png.png?raw=true)
+![Ordering](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Ordering.png?raw=true)
