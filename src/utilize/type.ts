@@ -15,3 +15,14 @@ export interface IGERN {
     id: number,
     name: string
 }
+
+export interface ICART {
+    id: number,
+    title: string,
+    poster_path: string
+}
+
+export interface IMOVIEPRICE {
+    id: number,
+    price: number
+}

@@ -10,7 +10,7 @@ export default function Layout(){
         <section
             className="w-full flex justify-center"
         >
-            <div className="w-full lg:w-2/3">
+            <div className="w-full lg:w-3/4 flex justify-center">
                 <Outlet />
             </div>
         </section>

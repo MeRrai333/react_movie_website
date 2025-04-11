@@ -1,24 +1,18 @@
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { getByIdMovie } from "../utilize/fetch/movie"
-import { ArrowUturnLeftIcon, ShoppingCartIcon } from "@heroicons/react/16/solid"
+import { ArrowUturnLeftIcon, PencilSquareIcon } from "@heroicons/react/16/solid"
 import { IMOVIE } from "../utilize/type"
 import { COLORS } from "../constant"
-import { findPrice } from "../utilize/findPrice"
-import { CartContext } from "../App"
-import PopupText from "../components/PopupText"
+import { findPrice, getAllAdjustPrice, setAllAdjustPrice } from "../utilize/findPrice" 
 
 const imageUrl = "https://image.tmdb.org/t/p/original"
 
-const fadeDuration = 3000
-
-export default function MovieDetailPage(){
+export default function MovieEditPricePage(){
     const navigate = useNavigate()
     const {id} = useParams()
     const [data, setData] = useState<IMOVIE|undefined>(undefined)
-    const [price, setPrice] = useState(0)
-    const cartContext = useContext(CartContext)
-    const [isPopUp, setIsPopUp] = useState(0)
+    const [price, setPrice] = useState(findPrice(Number(id)))
 
     useEffect(() => {
         if(!id)
@@ -33,13 +27,8 @@ export default function MovieDetailPage(){
             .catch(console.error)
     }, [])
 
-    const handlePopup = (val: number) => {
-        setIsPopUp(val)
-        setTimeout(() => setIsPopUp(0), fadeDuration+1000)
-    }
-
     return <main
-        className="w-fit flex justify-center py-4 px-6 flex-col"
+        className="w-fit flex justify-center pt-4 px-6 flex-col"
     >
         <button
             className="hover:text-gray-400 cursor-pointer w-fit"
@@ -51,9 +40,16 @@ export default function MovieDetailPage(){
             !data
                 ? <>Loading...</>
                 : <div className="mt-2">
-                    <h1
-                        className="text-xl"
-                    >{data.title}</h1>
+                    <div
+                        className="flex justify-between"
+                    >
+                        <h1
+                            className="text-xl"
+                        >{data.title}</h1>
+                        <h1
+                            className="text-xl"
+                        >Adjust price</h1>
+                    </div>
                     <div
                         className="flex flex-col md:flex-row gap-4"
                     >
@@ -123,59 +119,49 @@ export default function MovieDetailPage(){
                                 className={`flex justify-between gap-2 mt-4 pb-4`}
                             >
                                 <div
-                                    className={`p-2 ${COLORS.bg.primary} flex items-center justify-between w-1/3 min-w-fit md:w-1/4`}
+                                    className={`p-2 ${COLORS.bg.primary} flex justify-start items-center min-w-fit w-1/3 md:w-2/4`}
                                 >
                                     Price: 
-                                    <span>
-                                        {price.toFixed(2)}
-                                    </span>
+                                    <input
+                                        type="number"
+                                        value={price}
+                                        onChange={(e) => {
+                                            const val = e.target.value
+                                            if (/^\d*\.?\d{0,2}$/.test(val) || val === ''){
+                                                const temp = parseFloat(val)
+                                                if(temp > 0)
+                                                    setPrice(temp)
+                                            }
+                                        }}
+                                        className=" w-full text-right border-1 bg-white text-black"
+                                    />
                                 </div>
                                 <button
                                     className={`p-2 ${COLORS.bg.primary} w-fit hover:brightness-90 duration-200 cursor-pointer`}
                                     onClick={() => {
-                                        if(cartContext)
-                                            cartContext.setCart(prev => {
-                                                const temp = {
-                                                    id: data.id,
-                                                    title: data.title,
-                                                    poster_path: data.poster_path,
-                                                    price: price
-                                                }
-                                                if(prev){
-                                                    if(prev.find(c => c.id === data.id)){
-                                                        handlePopup(2)
-                                                        return prev
-                                                    }
-                                                    else{
-                                                        handlePopup(1)
-                                                        return [
-                                                            ...prev,
-                                                            temp
-                                                        ]
-                                                    }
-                                                }
-                                                handlePopup(1)
-                                                return [temp]
-                                            })
+                                        const newPrice = {
+                                            id: data.id,
+                                            price: price
+                                        }
+                                        const priceList = getAllAdjustPrice()
+                                        if(priceList){
+                                            setAllAdjustPrice([
+                                                ...priceList,
+                                                newPrice
+                                            ])
+                                        }
+                                        else{
+                                            setAllAdjustPrice([newPrice])
+                                        }
+                                        if(findPrice(data.id) === price)
+                                            alert('Saved change!')
                                     }}
                                 >
-                                    <ShoppingCartIcon className="size-8"/>
+                                    <PencilSquareIcon className="size-8"/>
                                 </button>
                             </div>
                         </div>
                     </div>
-                    {
-                        isPopUp
-                            ? <PopupText
-                                text={
-                                    isPopUp === 1
-                                    ? `Added "${data.title}" to cart`
-                                    : 'This film was in cart!'
-                                }
-                                fadeDuration={fadeDuration}
-                            />
-                            : <></>
-                    }
                 </div>
         }
     </main>
