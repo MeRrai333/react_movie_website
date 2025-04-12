@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { COLORS } from "../constant";
 import PriceSection from "../components/PriceSection";
 import { removePaymentLocalStorage } from "../utilize/removePayLocalStorage";
+import { useNavigate } from "react-router-dom";
 
 export const PAYLOCALSTORAGE = 'startPayTime'
 export const PAYITEMLOCALSTORAGE = 'payItem'
@@ -33,7 +34,7 @@ const BankingInfoList: IPaymentInfo[] = [
 const LINESECTION = "border-b-3 p-4"
 
 export default function WaitPayPage(){
-    console.log(localStorage.getItem(PAYITEMLOCALSTORAGE))
+    const navigate = useNavigate()
     const [itemList, _] = useState(
         localStorage.getItem(PAYITEMLOCALSTORAGE) !== null
             ? JSON.parse(localStorage.getItem(PAYITEMLOCALSTORAGE)!)
@@ -50,14 +51,14 @@ export default function WaitPayPage(){
         const startTimeTemp = localStorage.getItem(PAYLOCALSTORAGE)
         if(!startTimeTemp || !itemList){
             alert('Didn\'t have any order or order has timeout')
-            window.close()
+            navigate('/')
             return;
         }
         const diffSecTime = 60-Math.floor(((new Date()).getTime() - (new Date(startTimeTemp!)).getTime())/1000)
         if(diffSecTime < 0){
             removePaymentLocalStorage()
             alert('Out of time to pay!')
-            window.close()
+            navigate('/')
             return;
         }
 
