@@ -43,27 +43,27 @@ I have create adjust price page in path `/movie/:id/edit`
 For example  
 1. I want to change price of 'The Lord of the Rings' and ID of 'The Lord of the Rings' is 123  
 2. Then go to path `/movie/123/edit`  
-![Home1](https://github.com/MeRrai333/react_movie_website/blob/main/ui/change_price_ui.png?raw=true)  
+![Home1](https://github.com/MeRrai333/react_movie_website/blob/main/ui/changePrice_ui.png?raw=true)  
 3. Change price  
 4. Save!
 
 
 ## Example UI
-![Home1](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Home_1.png?raw=true)
+![Home1](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Home1.png?raw=true)
     
-![Home2](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Home_2.png?raw=true)
+![Home2](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Home2.png?raw=true)
     
-![Home3](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Home_3.png?raw=true)
+![Home3](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Home3.png?raw=true)
     
-![Movie_Detail](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Movie_Detail.png?raw=true)
+![Movie_Detail](https://github.com/MeRrai333/react_movie_website/blob/main/ui/MovieDetail.png?raw=true)
     
-![Movie_Adjust](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Movie_Adjust.png?raw=true)
+![Movie_Adjust](https://github.com/MeRrai333/react_movie_website/blob/main/ui/MovieAdjust.png?raw=true)
     
-![Cart1](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Cart_1.png?raw=true)
+![Cart1](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Cart1.png?raw=true)
     
-![Cart2](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Cart_2.png?raw=true)
+![Cart2](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Cart2.png?raw=true)
     
-![Cart3](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Cart_3.png?raw=true)
+![Cart3](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Cart3.png?raw=true)
     
 ![Ordering](https://github.com/MeRrai333/react_movie_website/blob/main/ui/Ordering.png?raw=true)
   
