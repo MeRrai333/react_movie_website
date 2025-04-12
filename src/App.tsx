@@ -8,6 +8,7 @@ import { getGenreList } from "./utilize/fetch/movie"
 import CartPage from "./pages/CartPage"
 import MovieEditPricePage from "./pages/MovieEditPricePage"
 import WaitPayPage from "./pages/WaitPayPage"
+import { autoRemovePaymentLocalStorage } from "./utilize/removePayLocalStorage"
 
 export const GenreListContext = createContext<IGERN[]|undefined>(undefined)
 export const CartContext = createContext<{
@@ -28,6 +29,7 @@ function App() {
     getGenreList()
       .then(json => setGenres(json.genres))
       .catch(console.error)
+    autoRemovePaymentLocalStorage()
   }, [])
 
   useEffect(() => {
@@ -44,8 +46,8 @@ function App() {
               <Route path="/movie/:id" element={<MovieDetailPage />} />
               <Route path="/movie/:id/edit" element={<MovieEditPricePage />} />
               <Route path="/cart" element={<CartPage />} />
-              <Route path="/cart/pay" element={<WaitPayPage />} />
             </Route>
+            <Route path="/cart/pay" element={<WaitPayPage />} />
           </Routes>
         </BrowserRouter>
       </GenreListContext.Provider>

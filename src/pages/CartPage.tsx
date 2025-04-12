@@ -88,10 +88,11 @@ export default function CartPage(){
                             return;
                         }
                         localStorage.setItem(PAYITEMLOCALSTORAGE, localStorage.getItem('cart')!)
+                        localStorage.setItem(PAYLOCALSTORAGE, (new Date()).toString())
                         localStorage.removeItem('cart')
                         cartContext?.setCart(undefined)
-                        localStorage.setItem(PAYLOCALSTORAGE, (new Date()).toString())
-                        navigate('/cart/pay')
+                        window.open('/cart/pay', '_blank')
+                        navigate('/')
                     }}
                 >Pay</button>
             </div>

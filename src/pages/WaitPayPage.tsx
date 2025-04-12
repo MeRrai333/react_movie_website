@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { COLORS } from "../constant";
-import { useNavigate } from "react-router-dom";
 import PriceSection from "../components/PriceSection";
 import { removePaymentLocalStorage } from "../utilize/removePayLocalStorage";
 
@@ -34,11 +33,13 @@ const BankingInfoList: IPaymentInfo[] = [
 const LINESECTION = "border-b-3 p-4"
 
 export default function WaitPayPage(){
+    console.log(localStorage.getItem(PAYITEMLOCALSTORAGE))
     const [itemList, _] = useState(
-        JSON.parse(localStorage.getItem(PAYITEMLOCALSTORAGE)!)
+        localStorage.getItem(PAYITEMLOCALSTORAGE) !== null
+            ? JSON.parse(localStorage.getItem(PAYITEMLOCALSTORAGE)!)
+            : undefined
     )
-    const timestamp = new Date().getTime()
-    const navigate = useNavigate()
+    const [timestamp, __] = useState(new Date().getTime())
     const [countDown, setCountDown] = useState(0)
     const [intervalId, setIntervalId] = useState<number|null>(null);
     const [paymentInfo, setPaymentInfo] = useState<IPaymentInfo[]|null>(null)
@@ -49,23 +50,26 @@ export default function WaitPayPage(){
         const startTimeTemp = localStorage.getItem(PAYLOCALSTORAGE)
         if(!startTimeTemp || !itemList){
             alert('Didn\'t have any order or order has timeout')
-            navigate('/')
+            window.close()
             return;
         }
         const diffSecTime = 60-Math.floor(((new Date()).getTime() - (new Date(startTimeTemp!)).getTime())/1000)
         if(diffSecTime < 0){
             removePaymentLocalStorage()
             alert('Out of time to pay!')
-            navigate('/')
+            window.close()
             return;
         }
+
         setPaymentInfo(BankingInfoList)
         setCountDown(diffSecTime)
         const countDownTimer = setInterval(() => {
             setCountDown(prev => prev-1)
         }, 1000)
         setIntervalId(countDownTimer)
-        return () => clearInterval(countDownTimer)
+        return () => {
+            clearInterval(countDownTimer)
+        }
     }, [])
 
     useEffect(() => {
@@ -84,76 +88,80 @@ export default function WaitPayPage(){
         return <></>
         
     return <main
-        className="flex justify-center pt-4 px-6 flex-col w-full"
+        className={`${COLORS.bg.tertiary} min-h-screen h-fit p-4 text-white flex justify-center pt-4 px-6 flex-col w-full`}
     >
         <div
-            className={`${COLORS.bg.primary} w-full p-4 rounded-md flex flex-col gap-2`}
+            className="w-full flex justify-center"
         >
-            <h1
-                className="text-xl uppercase font-bold"
-            >
-                Payment
-            </h1>
-            <p>
-                Please pay within
-            </p>
             <div
-                className={`text-7xl font-bold text-center ${LINESECTION}`}
+                className={`${COLORS.bg.primary} w-full md:w-2/3 p-4 rounded-md flex flex-col gap-2`}
             >
-                {
-                    isSucces === null
-                        ? countDown > 0
-                            ? countDown
-                            : 'Timeout'
-                        : isSucces
-                            ? <>
-                                Success paid
-                            </>
-                            : <>
-                                Failed to Paid
-                                <div
-                                    className="font-normal text-base underline"
-                                >
-                                    If you have any issue please contact seller
-                                </div>
-                            </>
-                }
-            </div>
-            <div
-                className={`${LINESECTION}`}
-            >
-                <h3
-                    className="text-lg uppercase font-bold"
+                <h1
+                    className="text-xl uppercase font-bold"
                 >
-                    Item info
-                </h3>
+                    Payment
+                </h1>
+                <p>
+                    Please pay within
+                </p>
                 <div
-                    className="flex justify-between"
+                    className={`text-7xl font-bold text-center ${LINESECTION}`}
                 >
-                    <div
-                        className="font-bold"
-                    >
-                        Order ID
-                    </div>
-                    <div>
-                        MRM{timestamp}
-                    </div>
+                    {
+                        isSucces === null
+                            ? countDown > 0
+                                ? countDown
+                                : 'Timeout'
+                            : isSucces
+                                ? <>
+                                    Success paid
+                                </>
+                                : <>
+                                    Failed to Paid
+                                    <div
+                                        className="font-normal text-base underline"
+                                    >
+                                        If you have any issue please contact seller
+                                    </div>
+                                </>
+                    }
                 </div>
-                <PriceSection 
-                    cart={itemList}
-                />
-            </div>
-            <div
-                className={`${LINESECTION} flex flex-col gap-4`}
-            >
-                {
-                    paymentInfo?.map((b,i) =>
-                        <PaymentSection
-                            key={i}
-                            data={b}
-                        />
-                    )
-                }
+                <div
+                    className={`${LINESECTION}`}
+                >
+                    <h3
+                        className="text-lg uppercase font-bold"
+                    >
+                        Item info
+                    </h3>
+                    <div
+                        className="flex justify-between"
+                    >
+                        <div
+                            className="font-bold"
+                        >
+                            Order ID
+                        </div>
+                        <div>
+                            MRM{timestamp}
+                        </div>
+                    </div>
+                    <PriceSection 
+                        cart={itemList}
+                    />
+                </div>
+                <div
+                    className={`${LINESECTION} flex flex-col gap-4`}
+                >
+                    {
+                        paymentInfo?.map((b,i) =>
+                            <PaymentSection
+                                key={i}
+                                data={b}
+                            />
+                        )
+                    }
+                </div>
             </div>
         </div>
     </main>

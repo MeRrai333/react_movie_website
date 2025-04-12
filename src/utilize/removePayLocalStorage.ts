@@ -5,8 +5,7 @@ export const autoRemovePaymentLocalStorage = () => {
     if(startTimeTemp){
         const diffSecTime = 60-Math.floor(((new Date()).getTime() - (new Date(startTimeTemp!)).getTime())/1000)
         if(diffSecTime < 0){
-            localStorage.removeItem(PAYLOCALSTORAGE)
-            localStorage.removeItem(PAYITEMLOCALSTORAGE)
+            removePaymentLocalStorage()
             return true;
         }
     }
